@@ -1,7 +1,7 @@
 ---
 title: Introduction to editing
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 15
 ---
 
 ::::::::::::::::::::::::::::::::::::::: objectives
@@ -31,6 +31,21 @@ exercises: 0
 Here we will work in the test instance of Wikidata so you will not break anything. Also keep in mind that the editing history is kept in Wikidata so error can also be easily fixed there. The test instance is cleaned regularly. You can quickly figure out if you are on the Wikidata instance (colored logo) or the test version (black-and-white only).
 
 ## 3\.2 Create new items
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+This exercise uses the test instance of Wikidata by default to avoid 
+cluttering the live database with practice entries. If you want to make 
+the exercise more hands-on, an alternative is to have learners find their 
+own institution's library in Wikidata and add a missing statement (e.g. 
+coordinates, official website, or an external identifier like ISNI). 
+This requires some preparation in advance.
+
+Note: Based on learner feedback, the focus of this lesson has shifted 
+towards SPARQL queries. This exercise can be kept short or skipped 
+if time is limited.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 In the following we will create new items. In order to avoid to fill Wikidata with test entries, we will use the test instance ([https://test.wikidata.org/](https://test.wikidata.org/)) and not the official, production version ([https://wikidata.org/](https://wikidata.org/)).
 
@@ -86,19 +101,51 @@ Support a person by it's IDs. Give the participtants the identifiers and source 
 
 ## 3\.5 Norms and good practices
 
-- Customization of languages for user interface
-- Wikidata "item" vs. "article" vs. "entry"
-- Policies for
-  - [Labels](https://www.wikidata.org/wiki/Special:MyLanguage/Help:Label)
-  - [Descriptions](https://www.wikidata.org/wiki/Special:MyLanguage/Help:Description)
-- Books
-  - [Data model](https://www.wikidata.org/wiki/Wikidata:WikiProject_Books)
-  - [Inventaire](https://inventaire.io/welcome)
+Wikidata has a number of community norms and best practices that are 
+important to follow when creating and editing items.
+
+### Language settings
+
+You can customize the languages displayed in the Wikidata interface 
+under your user preferences. This is useful if you work with items 
+in multiple languages.
+
+### Terminology
+
+Wikidata uses the term "item" rather than "article" or "entry". 
+This reflects that Wikidata is a database of structured data, not 
+a collection of articles like Wikipedia.
+
+### Policies for labels and descriptions
+
+Wikidata has specific guidelines for how labels and descriptions 
+should be written:
+
+- [Labels](https://www.wikidata.org/wiki/Special:MyLanguage/Help:Label) 
+  should be short and unambiguous.
+- [Descriptions](https://www.wikidata.org/wiki/Special:MyLanguage/Help:Description) 
+  should be brief and help distinguish an item from similar items.
+
+### Books and library materials
+
+Books are a common use case for librarians working with Wikidata, 
+but they have a relatively complex data model. Wikidata distinguishes 
+between a work (the intellectual content) and its editions (physical 
+manifestations). The [WikiProject Books data model](https://www.wikidata.org/wiki/Wikidata:WikiProject_Books) 
+provides guidance on how to model books correctly.
+
+[Inventaire](https://inventaire.io/welcome) is an example of a 
+tool built on Wikidata that focuses specifically on books and 
+library materials.
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- create new items
-- add new statements
+- Use the test instance of Wikidata (test.wikidata.org) to practice editing without affecting the live database.
+- New items require a label, description, and optional aliases; each item receives a unique Q-identifier.
+- Statements link properties (e.g. P569 "date of birth") to values and should be supported by references pointing to reliable sources.
+- Identifiers such as VIAF, Library of Congress authority ID, IMDb ID, or ORCID connect a Wikidata item to external databases and increase its reliability.
+- Community norms govern how labels and descriptions are written; following them ensures consistency across Wikidata.
+- Wikidata distinguishes between a work and its editions — this is especially relevant for books and library materials.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

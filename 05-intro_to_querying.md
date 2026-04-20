@@ -23,7 +23,12 @@ exercises: 0
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-FIXME
+In this episode we will learn how to query Wikidata using SPARQL, 
+the query language for RDF data. We will start with simple queries 
+and work our way up to more complex ones, including visualizations 
+like maps, charts, and graphs. The Wikidata Query Service at 
+[https://query.wikidata.org/](https://query.wikidata.org/) will be 
+our main tool throughout this episode.
 
 
 
@@ -88,7 +93,7 @@ SELECT * WHERE {
 ```
 
 *Hint* It is enough to start typing "SELECT" and then use the auto-completion with
-Ctrl+Space. % TODO what is this for on a Mac?
+Ctrl+Space.
 
 Inside the parenthesis you can then place the statements describing the graph pattern
 you are looking for.
@@ -117,6 +122,20 @@ SELECT * WHERE {
 
 ### Showing labels to Q-numbers
 
+By default, SPARQL queries return Q-numbers instead of human-readable 
+labels. To show labels, add the `SERVICE wikibase:label` block to your 
+query:
+
+```
+SELECT ?item ?itemLabel
+WHERE {
+?item wdt:P31 wd:Q7075.
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+```
+The `[AUTO_LANGUAGE]` placeholder automatically uses your browser's 
+language setting, with English as a fallback.
+
 ### Namespaces and Prefixes
 
 Prefixes are short abbrevations in the Wikidata Query Service. Some prefixes in Wikidata are: wd, wdt, p, ps, bd, etc.
@@ -143,11 +162,26 @@ Namespaces in Wikidata are:
 
 ### More conditions
 
-- publications from Addison-Wesley vs. books from Addison-Wesley vs. books authored by Richard Feynman from Addison-Wesley
-- LIMIT
-- ORDER
-- FILTER
-- OPTIONAL
+### More conditions
+
+You can combine multiple conditions in a single query. Here is an example 
+that finds books published by Addison-Wesley authored by Richard Feynman:
+
+```
+SELECT ?book ?bookLabel WHERE {
+?book wdt:P31 wd:Q571.        # instance of book
+?book wdt:P123 wd:Q353060.    # published by Addison-Wesley
+?book wdt:P50 wd:Q39246.      # authored by Richard Feynman
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+```
+Useful modifiers:
+
+- `LIMIT 10` — restrict results to 10 rows
+- `ORDER BY DESC(?date)` — sort results by date, newest first
+- `FILTER(YEAR(?date) > 2000)` — filter by year
+- `OPTIONAL { ?item wdt:P18 ?image }` — include a field only if it exists
+
   
 ### How to visualize your query
 
@@ -547,17 +581,55 @@ WHERE
 
 ## 5\.4 More Advanced queries
 
-further links
+Here are some more advanced query patterns that are particularly useful 
+for library use cases.
+
+### Federated queries and subqueries
+
+You can use subqueries to pre-filter data before the main query processes 
+it, which can significantly speed up complex queries:
 
 ```
-https://commons.wikimedia.org/wiki/File:Wikidata_Query_Service_in_Brief.pdf
-https://www.uni-mannheim.de/media/Einrichtungen/dws/Files_Teaching/Semantic_Web_Technologies/SWT05-SPARQL-v1.pdf
-https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial
+SELECT ?item ?itemLabel ?authorLabel WHERE {
+?item wdt:P31 wd:Q13442814.     # scholarly article
+?item wdt:P50 ?author.
+?author wdt:P108 wd:Q160302.     # affiliated with a specific institution
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+LIMIT 20
 ```
+### Maintenance queries
+
+Maintenance queries help identify items that are missing information. 
+These are useful for librarians who want to improve data quality:
+
+```
+# Libraries without coordinates
+SELECT ?item ?itemLabel WHERE { ?item wdt:P31 wd:Q7075. # instance of library FILTER NOT EXISTS { ?item wdt:P625 ?coord } SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } } LIMIT 20
+```
+
+```
+# Scholarly articles without a DOI
+SELECT ?item ?itemLabel WHERE { ?item wdt:P31 wd:Q13442814. # scholarly article FILTER NOT EXISTS { ?item wdt:P356 ?doi } SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } } LIMIT 20
+```
+
+### Further resources
+
+- [Wikidata Query Service in Brief (PDF)](https://commons.wikimedia.org/wiki/File:Wikidata_Query_Service_in_Brief.pdf)
+- [SPARQL tutorial on Wikidata](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial)
+- [SPARQL lecture slides, University of Mannheim](https://www.uni-mannheim.de/media/Einrichtungen/dws/Files_Teaching/Semantic_Web_Technologies/SWT05-SPARQL-v1.pdf)
+
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- First key point. (FIXME)
+- SPARQL is a query language for RDF data that allows you to search 
+  across the entire Wikidata knowledge graph.
+- The Wikidata Query Service at https://query.wikidata.org/ provides 
+  an interface to write and run SPARQL queries with auto-completion.
+- Results can be visualized in multiple ways including tables, maps, 
+  charts, and graphs using the Display menu or #defaultView.
+- It is good practice to modify existing example queries rather than 
+  writing queries from scratch.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

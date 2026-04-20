@@ -39,7 +39,7 @@ Save the DOI, PMID or PMCID of the article:
 
 ![](fig/episode_04_screenshot_02_choose_doi.png){alt='choose\_doi'}
 
-Go to [sourcemd](https://sourcemd.toolforge.org/orcidator_old.php) and paste the DOI or PMID into the search field:
+Go to [sourcemd](https://sourcemd.toolforge.org/index_old.php) and paste the DOI or PMID into the search field:
 
 ![](fig/episode_04_screenshot_03_paste_into_sourcemd.png){alt='paste\_into\_sourcemd'}
 
@@ -53,14 +53,61 @@ A new window with QuickStatements will pop up. Now you'll get an overview of the
 
 ## 4\.4 (OPTIONAL) Converting "author strings" to "author"
 
+When bibliographic data is imported into Wikidata in bulk, author names 
+are often stored as plain text strings using the property 
+**author name string (P2093)** rather than as linked Wikidata items 
+using **author (P50)**. Converting these strings to proper linked author 
+items makes the data much more useful — for example, it enables tools 
+like Scholia to generate complete researcher profiles.
+
+### Finding author strings
+
+You can find author strings that need disambiguation using this query 
+collection maintained by the Foerstner Lab:
+
 [Find Author Strings](https://github.com/foerstner-lab/Publication_list/blob/master/Query_Strings_for_Wikidata.md)
-[Author Disambiguator](https://author-disambiguator.toolforge.org/)
+
+You can also access your own Scholia profile's curation page by appending 
+`/missing` to your Scholia author URL, e.g.:
+`https://scholia.toolforge.org/author/Q18921408/missing`
+
+### Using the Author Disambiguator
+
+The [Author Disambiguator](https://author-disambiguator.toolforge.org/) 
+is a tool that helps you convert author name strings (P2093) to linked 
+author items (P50). To use it:
+
+1. Go to [https://author-disambiguator.toolforge.org/](https://author-disambiguator.toolforge.org/) 
+   and log in with your Wikimedia account.
+2. Enter an author name in the search field. Use natural order 
+   (Given name Family name).
+3. The tool will display a list of publications in Wikidata that have 
+   this name as an author string.
+4. Check the publications that belong to this author.
+5. Select the corresponding Wikidata author item from the list of 
+   potential matches at the bottom, or create a new one if needed.
+6. Click "Link selected works to author" to replace the string with 
+   a proper linked item.
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+This exercise works best with authors who have many publications already 
+in Wikidata, such as researchers active in open science or life sciences 
+communities. Encourage learners to try their own name or the name of a 
+colleague.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- First key point. (FIXME)
+- Sourcemd and QuickStatements allow you to automatically add 
+  bibliographic metadata from DOIs or PMIDs to Wikidata.
+- The Author Disambiguator tool can help convert unstructured 
+  author strings to linked Wikidata items.
+- Tools for advanced editing are under active development and 
+  may change or be temporarily unavailable.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
